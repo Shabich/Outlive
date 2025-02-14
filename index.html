@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Outlive</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <canvas id="gameCanvas" class="game-container" width="800" height="600">
+      </canvas>
+      <div class="stats">
+        <p>Vie: <span id="vie">100</span></p>
+        <p>Niveau: <span id="niveau">1</span></p>
+        <p>Expérience: <span id="experience">0</span></p>
+        <p>Points de compétence: <span id="pointsCompetence">0</span></p>
+      </div>
+      <div class="controls">
+        <button class="arrow-button" id="upButton">↑</button>
+        <button class="arrow-button" id="leftButton">←</button>
+        <button class="arrow-button" id="downButton">↓</button>
+        <button class="arrow-button" id="rightButton">→</button>
+      </div>
+    </div>
+
+    <!-- <script type="module" src="monster.js"></script> -->
+    <script type="module" src="main.js"></script>  </body>
+</html>
