@@ -2,6 +2,7 @@
 
 import { createMonsters, updateMonsters, spawnMonster, findClosestMonster, checkCollision, checkProjectileCollision } from "./monster.js";
 import { Projectile } from "./Projectile.js"
+import { Loot } from "./loot.js"
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -197,6 +198,9 @@ function showStatBanner(message) {
       }, 500); // Attendre la fin de la transition
   }, 2000);
 }
+new Loot(1, 1);
+
+
 
 // Démarrer le jeu
 gameLoop();

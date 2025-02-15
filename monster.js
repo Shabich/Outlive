@@ -11,6 +11,18 @@ class Monster {
       this.degat = 0.5;
       this.health = this.getHealthByType(type);
       this.color = this.getColorByType(type);
+
+
+      const imagePath = this.getImageByType(type); // Récupérer le chemin d'image
+      if (!imagePath) {
+          console.error(`Aucune image trouvée pour le type : ${type}`);
+      }
+
+      this.image = new Image(); // Initialisation correcte de l'objet Image
+      this.image.src = imagePath || "images/default.png"; // Assurer une image valide
+
+      
+
     }
   
     getXpGainByType(type) {
@@ -25,7 +37,15 @@ class Monster {
           return 2;
       }
     }
-
+    getImageByType(type) {
+      const imagesByType = {
+          "easy": "images/Monster1.png",
+          "medium": "images/Monster2.png",
+          "hard": "images/Monster3.png"
+      };
+      return imagesByType[type] || "images/default.png"; // Assurer une valeur de retour valide
+  }
+  
     getHealthByType(type) {
       switch (type) {
         case "easy":
@@ -53,26 +73,23 @@ class Monster {
     }
   
     draw(ctx) {
-        // Dessiner le monstre (rectangle coloré)
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-      
-        const healthBarWidth = this.width; 
-        const healthBarHeight = 5; 
-        const healthPercentage = this.health / this.getHealthByType(this.type); 
-        const healthColor = healthPercentage > 0.5 ? "green" : healthPercentage > 0.2 ? "orange" : "red"; 
-      
+      if (this.image.complete) { // Vérifie que l'image est bien chargée avant de la dessiner
+          ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+      }
 
-        if(healthPercentage < 1){
-            ctx.fillStyle = "gray";
-            ctx.fillRect(this.x, this.y - healthBarHeight - 2, healthBarWidth, healthBarHeight);
-            ctx.fillStyle = healthColor;
-            ctx.fillRect(this.x, this.y - healthBarHeight - 2, healthBarWidth * healthPercentage, healthBarHeight);
-          
-        }
-        }
-      
-  
+      // Dessiner la barre de vie
+      const healthBarWidth = this.width;
+      const healthBarHeight = 5;
+      const healthPercentage = this.health / this.getHealthByType(this.type);
+      const healthColor = healthPercentage > 0.5 ? "green" : healthPercentage > 0.2 ? "orange" : "red";
+
+      if (healthPercentage < 1) {
+          ctx.fillStyle = "gray";
+          ctx.fillRect(this.x, this.y - healthBarHeight - 2, healthBarWidth, healthBarHeight);
+          ctx.fillStyle = healthColor;
+          ctx.fillRect(this.x, this.y - healthBarHeight - 2, healthBarWidth * healthPercentage, healthBarHeight);
+      }
+  }
     moveTowardsPlayer(player) {
       const dx = player.x - this.x;
       const dy = player.y - this.y;
@@ -130,8 +147,8 @@ function checkProjectileCollision(projectile, monster) {
         if(player.health <= 0 ){
             // alert('Vous avez perdu!') //ajouter ici une animation pour la défaite. Personnage qui expose?
             monsters = []
-            location.reload(true);
-        }
+            window.location.assign("./index.html")
+          }
         }
     });
   }

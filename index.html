@@ -3,38 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Outlive</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Outlive - Menu</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("./images/fondMenu.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        font-family: "Pirata One", cursive;
+        color: white;
+        text-align: center;
+      }
+      .menu-container {
+        background: rgba(0, 51, 102, 0.8);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0, 102, 204, 0.7);
+      }
+      h1 {
+        font-size: 3em;
+        text-shadow: 0 0 15px #00aaff;
+      }
+      input {
+        padding: 10px;
+        font-size: 1.2em;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        margin-top: 10px;
+        text-align: center;
+        background: #005f99;
+        color: white;
+        border: 2px solid #00aaff;
+      }
+      button {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        padding: 15px;
+        font-size: 1.2em;
+        font-weight: bold;
+        background: #00aaff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #005f99;
+        box-shadow: 0 0 15px #00aaff;
+      }
+    </style>
   </head>
   <body>
-    <div>
-      <div class="xp-bar-container">
-        <div class="xp-bar" id="xpBar"></div>
-      </div>
-      <canvas id="gameCanvas" class="game-container" width="800" height="600"></canvas>
-    
-      <div class="stats">
-        <p>❤️ Vie: <span id="vie">100</span></p>
-        <p>⚔️ Attaque: <span id="attaque">10</span></p>
-        <p>🛡️ Défense: <span id="defense">5</span></p>
-        <p>⚡ Rapidité: <span id="vitesse">8</span></p>
-        <p>🏆 Niveau: <span id="niveau">1</span></p>
-        <p>⭐ Expérience: <span id="experience">0</span></p>
-        <p>🎯 Points: <span id="pointsCompetence">0</span></p>
-      </div>
-      
-      <div class="controls">
-        <button class="arrow-button" id="upButton">↑</button>
-        <button class="arrow-button" id="leftButton">←</button>
-        <button class="arrow-button" id="downButton">↓</button>
-        <button class="arrow-button" id="rightButton">→</button>
-      </div>
+    <div class="menu-container">
+      <h1>Outlive</h1>
+      <p>Entrez votre nom pour commencer :</p>
+      <input type="text" id="playerName" placeholder="Nom du joueur" />
+      <button onclick="startGame()">Jouer</button>
     </div>
-    <div id="statBanner" class="stat-banner"></div>
-
-    <!-- <script type="module" src="monster.js"></script> -->
-    <script type="module" src="main.js"></script> 
-  
-  
+    <script>
+      function startGame() {
+        let name = document.getElementById("playerName").value;
+        if (name.trim() === "") {
+          alert("Veuillez entrer un nom pour jouer.");
+          return;
+        }
+        window.location.href = 'game.html';
+      }
+    </script>
   </body>
 </html>
