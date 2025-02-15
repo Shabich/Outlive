@@ -129,6 +129,7 @@ function checkProjectileCollision(projectile, monster) {
         player.health = player.health - monster.degat
         if(player.health <= 0 ){
             // alert('Vous avez perdu!') //ajouter ici une animation pour la défaite. Personnage qui expose?
+            monsters = []
             location.reload(true);
         }
         }

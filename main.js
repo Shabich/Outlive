@@ -184,9 +184,23 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
+function showStatBanner(message) {
+  const banner = document.getElementById("statBanner");
+  banner.textContent = message;
+  banner.style.visibility = "visible";
+  banner.style.opacity = "1";
+
+  setTimeout(() => {
+      banner.style.opacity = "0";
+      setTimeout(() => {
+          banner.style.visibility = "hidden";
+      }, 500); // Attendre la fin de la transition
+  }, 2000);
+}
+
 // Démarrer le jeu
 gameLoop();
-
+showStatBanner("+10 Vie, +10 Attaque");
 // Ajouter un monstre toutes les 5 secondes en passant canvas en paramètre
 setInterval(() => spawnMonster(monsters, canvas), 1000);
 

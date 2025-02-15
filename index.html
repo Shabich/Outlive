@@ -8,16 +8,21 @@
   </head>
   <body>
     <div>
-      <canvas id="gameCanvas" class="game-container" width="800" height="600"></canvas>
       <div class="xp-bar-container">
         <div class="xp-bar" id="xpBar"></div>
-    </div>
-      <div class="stats">
-        <p>Vie: <span id="vie">100</span></p>
-        <p>Niveau: <span id="niveau">1</span></p>
-        <p>Expérience: <span id="experience">0</span></p>
-        <p>Points de compétence: <span id="pointsCompetence">0</span></p>
       </div>
+      <canvas id="gameCanvas" class="game-container" width="800" height="600"></canvas>
+    
+      <div class="stats">
+        <p>❤️ Vie: <span id="vie">100</span></p>
+        <p>⚔️ Attaque: <span id="attaque">10</span></p>
+        <p>🛡️ Défense: <span id="defense">5</span></p>
+        <p>⚡ Rapidité: <span id="vitesse">8</span></p>
+        <p>🏆 Niveau: <span id="niveau">1</span></p>
+        <p>⭐ Expérience: <span id="experience">0</span></p>
+        <p>🎯 Points: <span id="pointsCompetence">0</span></p>
+      </div>
+      
       <div class="controls">
         <button class="arrow-button" id="upButton">↑</button>
         <button class="arrow-button" id="leftButton">←</button>
@@ -25,7 +30,11 @@
         <button class="arrow-button" id="rightButton">→</button>
       </div>
     </div>
+    <div id="statBanner" class="stat-banner"></div>
 
     <!-- <script type="module" src="monster.js"></script> -->
-    <script type="module" src="main.js"></script>  </body>
+    <script type="module" src="main.js"></script> 
+  
+  
+  </body>
 </html>
