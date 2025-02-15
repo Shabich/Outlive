@@ -1,8 +1,14 @@
 // main.js
 
-import { createMonsters, updateMonsters, spawnMonster, findClosestMonster, checkCollision, checkProjectileCollision } from "./monster.js";
-import { Projectile } from "./Projectile.js"
-import { Loot } from "./loot.js"
+import {
+  createMonsters,
+  updateMonsters,
+  spawnMonster,
+  findClosestMonster,
+  checkProjectileCollision,
+} from "./monster.js";
+import { Projectile } from "./Projectile.js";
+import { Loot } from "./loot.js";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -11,8 +17,8 @@ let player = {
   y: 50,
   width: 40,
   height: 40,
-  health:100,
-  xp:0,
+  health: 100,
+  xp: 0,
   speed: 3,
   emoji: "👾",
   weapon: {
@@ -25,8 +31,9 @@ let player = {
 const xpParNiveau = 100;
 let niveau = 1;
 
+let loots = [];
 
-let projectiles = []
+let projectiles = [];
 
 let keys = { up: false, down: false, left: false, right: false };
 
@@ -76,23 +83,44 @@ document.getElementById("rightButton").addEventListener("click", () => {
 // Fonction pour dessiner le joueur
 function drawPlayer() {
   const healthBarWidth = player.width;
-  const healthBarHeight = 5; 
+  const healthBarHeight = 5;
   const healthPercentage = player.health / 100;
-  const healthColor = healthPercentage > 0.6 ? "green" : healthPercentage > 0.3 ? "orange" : "red";
+  const healthColor =
+    healthPercentage > 0.6
+      ? "green"
+      : healthPercentage > 0.3
+      ? "orange"
+      : "red";
 
-  // Dessiner l'arrière-plan de la barre de vie 
+  // Dessiner l'arrière-plan de la barre de vie
   ctx.fillStyle = "gray";
-  ctx.fillRect(player.x, player.y - healthBarHeight - 5, healthBarWidth, healthBarHeight);
+  ctx.fillRect(
+    player.x,
+    player.y - healthBarHeight - 5,
+    healthBarWidth,
+    healthBarHeight
+  );
 
-  // Dessiner la barre de vie actuelle 
+  // Dessiner la barre de vie actuelle
   ctx.fillStyle = healthColor;
-  ctx.fillRect(player.x, player.y - healthBarHeight - 5, healthBarWidth * healthPercentage, healthBarHeight);
-  document.getElementById("vie").textContent = Math.round(player.health)
+  ctx.fillRect(
+    player.x,
+    player.y - healthBarHeight - 5,
+    healthBarWidth * healthPercentage,
+    healthBarHeight
+  );
+  document.getElementById("vie").textContent = Math.round(player.health);
+  document.getElementById("attaque").textContent = player.weapon.damage
+  document.getElementById("vitesse").textContent = player.speed
   // Dessiner le joueur (emoji)
   ctx.font = `${player.height}px Arial`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(player.emoji, player.x + player.width / 2, player.y + player.height / 2);
+  ctx.fillText(
+    player.emoji,
+    player.x + player.width / 2,
+    player.y + player.height / 2
+  );
 }
 
 // Fonction pour effacer le canvas
@@ -103,9 +131,11 @@ function clearCanvas() {
 // Fonction pour déplacer le joueur
 function movePlayer() {
   if (keys.up && player.y > 0) player.y -= player.speed;
-  if (keys.down && player.y + player.height < canvas.height) player.y += player.speed;
+  if (keys.down && player.y + player.height < canvas.height)
+    player.y += player.speed;
   if (keys.left && player.x > 0) player.x -= player.speed;
-  if (keys.right && player.x + player.width < canvas.width) player.x += player.speed;
+  if (keys.right && player.x + player.width < canvas.width)
+    player.x += player.speed;
 }
 
 function shootProjectile(player, monsters) {
@@ -120,6 +150,47 @@ function shootProjectile(player, monsters) {
   }
 }
 
+function checkLootCollision() {
+  loots.forEach((loot, index) => {
+      if (
+          player.x < loot.x + loot.width &&
+          player.x + player.width > loot.x &&
+          player.y < loot.y + loot.height &&
+          player.y + player.height > loot.y
+      ) {
+          // Appliquer le buff au joueur
+          applyLootEffect(loot.buff);
+          
+          // Supprimer le loot après l'avoir ramassé
+          loots.splice(index, 1);
+      }
+  });
+}
+
+function applyLootEffect(buff) {
+  const type = Object.keys(buff)[0];  // Ex: "health", "damage", etc.
+  const value = parseInt(buff[type]); // Convertir en nombre
+
+  switch (type) {
+      case "health":
+          player.health = player.health + value; // Ne dépasse pas 100
+          showStatBanner(`+${value} Santé`);
+          break;
+      case "damage":
+          player.weapon.damage += value;
+          showStatBanner(`+${value} Dégâts`);
+          break;
+      case "speed":
+          player.speed += value;
+          showStatBanner(`+${value} Vitesse`);
+          break;
+      case "heal":
+          player.health = Math.min(player.health + value, 100);
+          showStatBanner(`+${value} Soin`);
+          break;
+  }
+}
+
 // Créer des monstres en passant canvas en paramètre
 let monsters = createMonsters(5, canvas);
 
@@ -129,7 +200,10 @@ let monsters = createMonsters(5, canvas);
 function gameLoop() {
   clearCanvas();
   movePlayer();
+  checkLootCollision();
+
   drawPlayer();
+  loots.forEach((loot) => loot.draw());
 
   // Tirer un projectile si le temps est écoulé
   const now = Date.now();
@@ -145,21 +219,16 @@ function gameLoop() {
 
     // Vérifier les collisions avec les monstres
     monsters.forEach((monster, monsterIndex) => {
-      if (checkCollision(projectile, monster)) {
-        // Infliger des dégâts au monstre
-        monster.health -= player.weapon.damage;
-        if (monster.health <= 0) {
-          monsters.splice(monsterIndex, 1); // Supprimer le monstre
-        }
-        projectiles.splice(index, 1); // Supprimer le projectile
-      }
       if (checkProjectileCollision(projectile, monster)) {
         monster.health -= player.weapon.damage;
         if (monster.health <= 0) {
           monsters.splice(monsterIndex, 1);
-          player.xp = player.xp + monster.gainXp
-          ajouterExperience(monster.gainXp)
-          // document.getElementById("experience").textContent = player.xp// Supprimer le monstre s'il n'a plus de vie
+          player.xp = player.xp + monster.gainXp;
+          ajouterExperience(monster.gainXp);
+          if (Math.random() < 0.9) {
+            loots.push(new Loot(monster.x, monster.y, ctx));
+
+          }
         }
         projectiles.splice(index, 1); // Supprimer le projectile après collision
       }
@@ -169,17 +238,17 @@ function gameLoop() {
     player.xp += valeur;
     if (player.xp >= xpParNiveau) {
       player.xp -= xpParNiveau;
-        niveau++;
-        document.getElementById("niveau").textContent = niveau;
+      niveau++;
+      document.getElementById("niveau").textContent = niveau;
     }
     document.getElementById("experience").textContent = player.xp;
     mettreAJourXPBar();
-}
+  }
 
   function mettreAJourXPBar() {
     const xpPourcentage = (player.xp / xpParNiveau) * 100;
     document.getElementById("xpBar").style.width = xpPourcentage + "%";
-}
+  }
   // Mettre à jour et dessiner les monstres
   updateMonsters(monsters, player, ctx);
   requestAnimationFrame(gameLoop);
@@ -192,19 +261,15 @@ function showStatBanner(message) {
   banner.style.opacity = "1";
 
   setTimeout(() => {
-      banner.style.opacity = "0";
-      setTimeout(() => {
-          banner.style.visibility = "hidden";
-      }, 500); // Attendre la fin de la transition
+    banner.style.opacity = "0";
+    setTimeout(() => {
+      banner.style.visibility = "hidden";
+    }, 500); // Attendre la fin de la transition
   }, 2000);
 }
-new Loot(1, 1);
-
-
+new Loot(100, 100);
 
 // Démarrer le jeu
 gameLoop();
-showStatBanner("+10 Vie, +10 Attaque");
 // Ajouter un monstre toutes les 5 secondes en passant canvas en paramètre
 setInterval(() => spawnMonster(monsters, canvas), 1000);
-

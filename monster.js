@@ -118,14 +118,7 @@ class Monster {
   }
   
   // Fonction pour vérifier les collisions entre le joueur et les monstres
-  function checkCollision(player, monster) {
-    return (
-      player.x < monster.x + monster.width &&
-      player.x + player.width > monster.x &&
-      player.y < monster.y + monster.height &&
-      player.y + player.height > monster.y
-    );
-  }
+
   // monster.js
 
 function checkProjectileCollision(projectile, monster) {
@@ -135,6 +128,14 @@ function checkProjectileCollision(projectile, monster) {
     return distance < projectile.radius + monster.width / 2;
   }
 
+  function checkCollision(player, monster) {
+    return (
+      player.x < monster.x + monster.width &&
+      player.x + player.width > monster.x &&
+      player.y < monster.y + monster.height &&
+      player.y + player.height > monster.y
+    );
+  }
   // Fonction pour mettre à jour les monstres
   function updateMonsters(monsters, player, ctx) {
     monsters.forEach((monster) => {
@@ -145,7 +146,6 @@ function checkProjectileCollision(projectile, monster) {
         console.log("Collision avec un monstre!");
         player.health = player.health - monster.degat
         if(player.health <= 0 ){
-            // alert('Vous avez perdu!') //ajouter ici une animation pour la défaite. Personnage qui expose?
             monsters = []
             window.location.assign("./index.html")
           }
@@ -184,4 +184,4 @@ function findClosestMonster(player, monsters) {
   }
   
   // Exporter les fonctions et classes nécessaires
-  export { Monster, createMonsters, updateMonsters, spawnMonster, checkCollision, findClosestMonster, checkProjectileCollision };
+  export { Monster, createMonsters, updateMonsters, spawnMonster, findClosestMonster, checkProjectileCollision };
