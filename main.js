@@ -225,7 +225,7 @@ function gameLoop() {
           monsters.splice(monsterIndex, 1);
           player.xp = player.xp + monster.gainXp;
           ajouterExperience(monster.gainXp);
-          if (Math.random() < 0.9) {
+          if (Math.random() < 0.2) {
             loots.push(new Loot(monster.x, monster.y, ctx));
 
           }
