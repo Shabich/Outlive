@@ -11,6 +11,7 @@ let player = {
   width: 40,
   height: 40,
   health:100,
+  xp:0,
   speed: 3,
   emoji: "👾",
   weapon: {
@@ -19,6 +20,10 @@ let player = {
     lastShot: 0, // Timestamp du dernier tir
   },
 };
+
+const xpParNiveau = 100;
+let niveau = 1;
+
 
 let projectiles = []
 
@@ -81,14 +86,13 @@ function drawPlayer() {
   // Dessiner la barre de vie actuelle 
   ctx.fillStyle = healthColor;
   ctx.fillRect(player.x, player.y - healthBarHeight - 5, healthBarWidth * healthPercentage, healthBarHeight);
-
+  document.getElementById("vie").textContent = Math.round(player.health)
   // Dessiner le joueur (emoji)
   ctx.font = `${player.height}px Arial`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(player.emoji, player.x + player.width / 2, player.y + player.height / 2);
 }
-
 
 // Fonction pour effacer le canvas
 function clearCanvas() {
@@ -102,8 +106,6 @@ function movePlayer() {
   if (keys.left && player.x > 0) player.x -= player.speed;
   if (keys.right && player.x + player.width < canvas.width) player.x += player.speed;
 }
-
-
 
 function shootProjectile(player, monsters) {
   const closestMonster = findClosestMonster(player, monsters);
@@ -153,19 +155,32 @@ function gameLoop() {
       if (checkProjectileCollision(projectile, monster)) {
         monster.health -= player.weapon.damage;
         if (monster.health <= 0) {
-          monsters.splice(monsterIndex, 1); // Supprimer le monstre s'il n'a plus de vie
+          monsters.splice(monsterIndex, 1);
+          player.xp = player.xp + monster.gainXp
+          ajouterExperience(monster.gainXp)
+          // document.getElementById("experience").textContent = player.xp// Supprimer le monstre s'il n'a plus de vie
         }
         projectiles.splice(index, 1); // Supprimer le projectile après collision
       }
     });
   });
+  function ajouterExperience(valeur) {
+    player.xp += valeur;
+    if (player.xp >= xpParNiveau) {
+      player.xp -= xpParNiveau;
+        niveau++;
+        document.getElementById("niveau").textContent = niveau;
+    }
+    document.getElementById("experience").textContent = player.xp;
+    mettreAJourXPBar();
+}
 
-
-
- 
+  function mettreAJourXPBar() {
+    const xpPourcentage = (player.xp / xpParNiveau) * 100;
+    document.getElementById("xpBar").style.width = xpPourcentage + "%";
+}
   // Mettre à jour et dessiner les monstres
   updateMonsters(monsters, player, ctx);
-
   requestAnimationFrame(gameLoop);
 }
 
@@ -174,3 +189,4 @@ gameLoop();
 
 // Ajouter un monstre toutes les 5 secondes en passant canvas en paramètre
 setInterval(() => spawnMonster(monsters, canvas), 1000);
+

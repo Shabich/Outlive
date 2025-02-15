@@ -1,5 +1,4 @@
 // monster.js
-
 class Monster {
     constructor(x, y, type) {
       this.x = x;
@@ -7,12 +6,26 @@ class Monster {
       this.width = 40;
       this.height = 40;
       this.speed = 0.5;
+      this.gainXp = this.getXpGainByType(type);
       this.type = type;
       this.degat = 0.5;
       this.health = this.getHealthByType(type);
       this.color = this.getColorByType(type);
     }
   
+    getXpGainByType(type) {
+      switch (type) {
+        case "easy":
+          return 2;
+        case "medium":
+          return 4;
+        case "hard":
+          return 6;
+        default:
+          return 2;
+      }
+    }
+
     getHealthByType(type) {
       switch (type) {
         case "easy":
@@ -115,7 +128,8 @@ function checkProjectileCollision(projectile, monster) {
         console.log("Collision avec un monstre!");
         player.health = player.health - monster.degat
         if(player.health <= 0 ){
-            // gerer la défaite
+            // alert('Vous avez perdu!') //ajouter ici une animation pour la défaite. Personnage qui expose?
+            location.reload(true);
         }
         }
     });
