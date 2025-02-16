@@ -3,7 +3,7 @@ export class Projectile {
       this.x = x;
       this.y = y;
       this.target = target;
-      this.speed = 5;
+      this.speed = 10;
       this.radius = 5;
       this.color = "black";
     }

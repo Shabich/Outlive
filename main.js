@@ -2,6 +2,7 @@
 
 import {
   createMonsters,
+  createBoss,
   updateMonsters,
   spawnMonster,
   findClosestMonster,
@@ -15,12 +16,12 @@ const ctx = canvas.getContext("2d");
 let player = {
   x: 50,
   y: 50,
-  width: 40,
-  height: 40,
+  width: 80,
+  height: 80,
   health: 100,
   xp: 0,
   speed: 3,
-  emoji: "👾",
+  image :"./images/Craby.png",
   weapon: {
     damage: 1,
     fireRate: 1000, // Temps entre chaque tir en millisecondes
@@ -30,13 +31,10 @@ let player = {
 
 const xpParNiveau = 100;
 let niveau = 1;
-
 let loots = [];
-
 let projectiles = [];
-
 let keys = { up: false, down: false, left: false, right: false };
-
+let isPaused = false
 // Gestion des événements clavier et boutons (identique à avant)
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowUp") keys.up = true;
@@ -86,11 +84,7 @@ function drawPlayer() {
   const healthBarHeight = 5;
   const healthPercentage = player.health / 100;
   const healthColor =
-    healthPercentage > 0.6
-      ? "green"
-      : healthPercentage > 0.3
-      ? "orange"
-      : "red";
+    healthPercentage > 0.6 ? "green" : healthPercentage > 0.3 ? "orange" : "red";
 
   // Dessiner l'arrière-plan de la barre de vie
   ctx.fillStyle = "gray";
@@ -109,18 +103,33 @@ function drawPlayer() {
     healthBarWidth * healthPercentage,
     healthBarHeight
   );
+
+  // Mettre à jour les informations du joueur dans l'interface
   document.getElementById("vie").textContent = Math.round(player.health);
-  document.getElementById("attaque").textContent = player.weapon.damage
-  document.getElementById("vitesse").textContent = player.speed
-  // Dessiner le joueur (emoji)
-  ctx.font = `${player.height}px Arial`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(
-    player.emoji,
-    player.x + player.width / 2,
-    player.y + player.height / 2
-  );
+  document.getElementById("attaque").textContent = player.weapon.damage;
+  document.getElementById("vitesse").textContent = player.speed;
+
+  document.getElementById("pauseButton").addEventListener("click", togglePause);
+
+  // Dessiner le joueur (image)
+  const playerImage = new Image();
+  playerImage.src = player.image;
+  if (playerImage.complete) {
+    ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+  } else {
+    playerImage.onload = function () {
+      ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+    };
+  }
+}
+
+
+
+function togglePause() {
+  isPaused = !isPaused;
+  if (!isPaused) {
+    gameLoop(); // Relancer la boucle de jeu si on reprend
+  }
 }
 
 // Fonction pour effacer le canvas
@@ -198,6 +207,9 @@ let monsters = createMonsters(5, canvas);
 // main.js
 
 function gameLoop() {
+  if (isPaused) return;
+
+
   clearCanvas();
   movePlayer();
   checkLootCollision();
@@ -239,6 +251,10 @@ function gameLoop() {
     if (player.xp >= xpParNiveau) {
       player.xp -= xpParNiveau;
       niveau++;
+      if(niveau % 2 == 0){
+        createBoss(canvas, monsters);
+      }
+      
       document.getElementById("niveau").textContent = niveau;
     }
     document.getElementById("experience").textContent = player.xp;

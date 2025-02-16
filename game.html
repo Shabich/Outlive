@@ -5,40 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Outlive</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *{
+        font-family: "Pirata One", cursive;
+      }
+    </style>
   </head>
   <body>
-    <div>
-      <div class="xp-bar-container">
-        <div class="xp-bar" id="xpBar"></div>
-      </div>
-      <canvas id="gameCanvas" class="game-container" width="800" height="600"></canvas>
+    <div class="parent">
+      <div class="div1">
+        <div class="action-container">
+          <div
+            class="btn-action actionMenu"
+            onclick="window.location.href='index.html'"
+          ></div>
+          <div
+          class="btn-action actionPause"
+          id="pauseButton"
+        ></div>
+          
     
-      <div class="stats">
-        <p>❤️ Vie: <span id="vie">100</span></p>
-        <p>⚔️ Attaque: <span id="attaque">10</span></p>
-        <p>⚡ Rapidité: <span id="vitesse">8</span></p>
-        <p>🏆 Niveau: <span id="niveau">1</span></p>
-        <p>⭐ Expérience: <span id="experience">0</span></p>
-      
+        </div>
+      </div>
+      <div class="div2">
+        <div class="game-wrapper">
+          <div class="leader">
+            <div class="title-image"></div>
+
+            <div class="leaderboard">
+              <h1>Leaderboard</h2>
+                <p>1. Alex Storm - 7200 pts</p>
+                <p>2. Lina Shadow - 6800 pts</p>
+                <p>3. Max Thunder - 6300 pts</p>
+                <p>4. Kira Blaze - 5900 pts</p>
+                <p>5. Leo Frost - 5500 pts</p>
+                <p>6. Nina Strike - 5100 pts</p>
+                <p>7. Zack Phantom - 4700 pts</p>
+                
+          </div>
+          </div>
+          
+          
+          <div class="game">
+            <div class="xp-bar-container">
+              <div class="xp-bar" id="xpBar"></div>
+            </div>
+            <canvas
+              id="gameCanvas"
+              class="game-container"
+              width="800"
+              height="600"
+            ></canvas>
+          </div>
+          
+          <div class="stats">
+            <p>
+              <img src="images/buffs/health.png" alt="Santé" class="stat-icon" />
+              Points de vie: <span id="vie">100</span>
+            </p>
+            <p>
+              <img src="images/buffs/attack.png" alt="Attaque" class="stat-icon" />
+              Attaque: <span id="attaque">10</span>
+            </p>
+            <p>
+              <img src="images/buffs/health.png" class="stat-icon" />
+              Vitesse d'attaque: <span id="vitesse">8</span>
+            </p>
+            <p>
+              <img src="images/buffs/health.png" class="stat-icon" />
+              Vitesse d'attaque: <span id="experience">8</span>
+            </p>
+            <p>
+              <img src="images/buffs/coin.png" class="stat-icon" />
+              Pièces d'or: <span id="niveau">1</span>
+            </p>
+          </div>
       </div>
       
-      <div class="controls">
-        <button class="arrow-button" id="upButton">↑</button>
-        <button class="arrow-button" id="leftButton">←</button>
-        <button class="arrow-button" id="downButton">↓</button>
-        <button class="arrow-button" id="rightButton">→</button>
       </div>
-    </div>
+      <div class="div3">
+        <div class="controls">
+          <div class="arrow-button" id="upButton"></div>
+          <div class="arrow-button" id="leftButton"></div>
+          <div class="arrow-button" id="downButton"></div>
+          <div class="arrow-button" id="rightButton"></div>
+        </div>
+      </div>
+    <div>
+  
     <div id="statBanner" class="stat-banner"></div>
-    <div class="action-container">
-      <div class="btn-action actionMenu" onclick="window.location.href='index.html'"></div>
-      <!-- add Pause & home btn -->
-
-    </div>
-
-    <!-- <script type="module" src="monster.js"></script> -->
-    <script type="module" src="main.js"></script> 
-  
-  
+    <script type="module" src="main.js"></script>
   </body>
 </html>

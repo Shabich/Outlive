@@ -3,26 +3,19 @@ class Monster {
     constructor(x, y, type) {
       this.x = x;
       this.y = y;
-      this.width = 40;
-      this.height = 40;
+      this.width =  type != 'boss' ? 40 : 100;
+      this.height = type != 'boss' ? 40 : 100;
       this.speed = 0.5;
       this.gainXp = this.getXpGainByType(type);
       this.type = type;
-      this.degat = 0.5;
+      this.degat = type != 'boss' ? 0.5 : 2;
       this.health = this.getHealthByType(type);
-      this.color = this.getColorByType(type);
-
-
       const imagePath = this.getImageByType(type); // Récupérer le chemin d'image
       if (!imagePath) {
           console.error(`Aucune image trouvée pour le type : ${type}`);
       }
-
       this.image = new Image(); // Initialisation correcte de l'objet Image
       this.image.src = imagePath || "images/default.png"; // Assurer une image valide
-
-      
-
     }
   
     getXpGainByType(type) {
@@ -33,6 +26,8 @@ class Monster {
           return 4;
         case "hard":
           return 6;
+        case "boss":
+          return 20;
         default:
           return 2;
       }
@@ -41,7 +36,8 @@ class Monster {
       const imagesByType = {
           "easy": "images/Monster1.png",
           "medium": "images/Monster2.png",
-          "hard": "images/Monster3.png"
+          "hard": "images/Monster3.png",
+          "boss": "images/Boss1.png",
       };
       return imagesByType[type] || "images/default.png"; // Assurer une valeur de retour valide
   }
@@ -54,24 +50,14 @@ class Monster {
           return 2;
         case "hard":
           return 3;
+        case "boss":
+          return 10;
         default:
           return 1;
       }
     }
   
-    getColorByType(type) {
-      switch (type) {
-        case "easy":
-          return "green";
-        case "medium":
-          return "orange";
-        case "hard":
-          return "red";
-        default:
-          return "green";
-      }
-    }
-  
+
     draw(ctx) {
       if (this.image.complete) { // Vérifie que l'image est bien chargée avant de la dessiner
           ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -102,6 +88,8 @@ class Monster {
     }
   }
   
+
+
   // Fonction pour créer des monstres
   function createMonsters(count, canvas) { // Ajouter canvas en paramètre
     const monsters = [];
@@ -113,10 +101,21 @@ class Monster {
       const type = types[Math.floor(Math.random() * types.length)];
       monsters.push(new Monster(x, y, type));
     }
-  
     return monsters;
   }
   
+  function createBoss(canvas, monsters) {
+    if (!Array.isArray(monsters)) {
+      throw new Error("monsters doit être un tableau");
+    }
+    const x = Math.random() * (canvas.width - 80); // Boss plus grand, ajuste la position
+    const y = Math.random() * (canvas.height - 80);
+    const boss = new Monster(x, y, "boss");
+    monsters.push(boss);
+  }
+  
+  
+
   // Fonction pour vérifier les collisions entre le joueur et les monstres
 
   // monster.js
@@ -184,4 +183,4 @@ function findClosestMonster(player, monsters) {
   }
   
   // Exporter les fonctions et classes nécessaires
-  export { Monster, createMonsters, updateMonsters, spawnMonster, findClosestMonster, checkProjectileCollision };
+  export { Monster, createMonsters, createBoss, updateMonsters, spawnMonster, findClosestMonster, checkProjectileCollision };

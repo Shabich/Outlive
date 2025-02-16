@@ -1,136 +1,83 @@
-
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Love", sans-serif;
-  }
-
-  body,
-  html {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #9eb6ba; 
-  }
-
-  .game-container {
-    position: relative;
-    border: 2px solid #000000; 
-    background-image: url('./fond.png');
-    
-
-    border-radius: 15px; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  .player {
-    position: absolute;
-    font-size: 40px;
-    text-align: center;
-    line-height: 40px;
-    width: 20px;
-    height: 20px;
-    background-color: transparent;
-    color: #8e44ad; 
-    pointer-events: none;
-  }
-
-
-
-
-
-  .controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  .controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .arrow-button {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .controls > #upButton {
-    order: 1;
-  }
-
-  .controls > #downButton {
-    order: 3;
-  }
-
-  .controls > #leftButton {
-    order: 2;
-  }
-
-  .controls > #rightButton {
-    order: 4;
-  }
-
-  .controls {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
-    grid-gap: 10px;
-  }
-
-  #upButton {
-    grid-column: 2/ 3;
-  }
-
-  #downButton {
-    grid-row: 2;
-  }
-
-  #leftButton {
-    grid-row: 2;
-  }
-
-  #rightButton {
-    grid-row: 2;
-  }
-
-  .arrow-button {
-    background-color: #6a6a6a;
-    border: none;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 50%;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  .xp-bar-container {
-    width: 800px;
-    height: 20px;
-    background-color: #ccc;
-    border: 2px solid black;
-    margin: 10px auto;
-    margin-top: 20px;
-    position: relative;
+:root {
+  --primary-bg: #dab783;
+  --border-color: #000000;
+  --xp-bar-bg: #ffd500;
+  --stats-bg: #4a4aaf;
+  --stats-text: white;
+  --highlight: #ffcc00;
+  --banner-bg: #4a4aaf7c;
 }
+
+@keyframes bubbleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Love", sans-serif;
+}
+
+body,
+html {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-bg);
+}
+
+.game-container {
+  position: relative;
+  border: 2px solid var(--border-color);
+  background-image: url("./images/fondGame.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.player {
+  position: absolute;
+  font-size: 40px;
+  text-align: center;
+  line-height: 40px;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.controls {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  grid-gap: 10px;
+}
+
+.xp-bar-container {
+  width: 800px;
+  height: 15px;
+  background-color: #ccc;
+  border: 2px solid var(--border-color);
+  margin: 10px auto;
+  margin-top: 20px;
+  position: relative;
+}
+
 .xp-bar {
-    height: 100%;
-    width: 0%;
-    background-color: #4caf50;
-    transition: width 0.5s ease-in-out;
+  height: 100%;
+  width: 0%;
+  background-color: var(--xp-bar-bg);
+  transition: width 0.5s ease-in-out;
 }
 
 .stat-banner {
@@ -138,8 +85,8 @@
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(5, 0, 143, 0.5);
-  color: white;
+  background-color: var(--banner-bg);
+  color: var(--stats-text);
   padding: 15px 30px;
   border-radius: 10px;
   font-size: 20px;
@@ -149,23 +96,30 @@
   transition: opacity 0.7s ease-in-out;
 }
 
-
 .stats {
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 18px;
-  min-width: 180px;
-  text-align: left;
+  border: 2px solid  var(--border-color); /* Bordure noire */
+  background-image: url("images/texture.jpg");
+  background-size: contain;
+  background-position: center;
+  
+  font-size: x-large;
+  text-align: center;
+ 
+
+  /* Bordure intérieure blanche diffuse */
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.3);
+
+  margin-top: 50px;
+  color: var(--stats-text);
+  padding: 20px;
+  height: 600px;
+  border-radius: 15px;
+  text-align: center;
 }
 
 .stats p {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 10px;
   margin: 10px 0;
@@ -174,32 +128,146 @@
 
 .stats span {
   font-weight: bold;
-  color: #ffcc00;
+  color: var(--highlight);
 }
 
-
-.btn-action{
+.btn-action {
   transition: transform 0.2s ease, opacity 0.2s ease;
   border: none;
   cursor: pointer;
-  height: 80px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
+  background-image: url("images/tuilesIcones.png");
+  background-size: 300px 300px;
 }
+
 .action-container {
   position: fixed;
   display: flex;
-  top: 20px;
+  top: 10px;
   left: 20px;
   height: 80px;
 }
-.actionMenu{ 
-  background-image: url('./images/toMenu.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+.actionMenu {
+  background-position: 60px 120px;
+}
+.actionPause {
+  background-position: -300px 0px;
 }
 .btn-action:hover {
   transform: scale(1.1);
   opacity: 0.8;
 }
+.parent {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-rows: auto 1fr auto;
+  width: 100vw;
+  gap: 10px;
+  padding: 10px;
+}
 
+.div1 {
+  grid-area: 1 / 1 / 2 / 6;
+  grid-column: 1 / 4;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.div2 {
+  grid-area: 2 / 1 / 9 / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 1 / 4;
+  grid-row: 2;
+}
+
+.div3 {
+  grid-area: 9 / 1 / 11 / 2;
+  grid-column: 2;
+  grid-row: 3;
+  display: flex;
+  justify-content: center;
+}
+
+.game-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  align-items: center;
+  width: 100%;
+}
+
+.leader {
+  margin-top: 50px;
+  grid-column: 1;
+  color: var(--stats-text);
+  height: 600px;
+}
+.title-image {
+  background-image: url("./images/outliveTitle.PNG");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 250px;
+}
+.leaderboard {
+  border: 2px solid black; /* Bordure noire */
+  background-image: url("images/texture.jpg");
+  background-size: contain;
+  background-position: center;
+  height: 350px;
+  font-size: x-large;
+  color: var(--highlight);
+  text-align: center;
+  border-radius: 15px;
+  padding-top: 30px;
+
+  /* Bordure intérieure blanche diffuse */
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.3);
+}
+
+.game {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#upButton {
+  grid-column: 2;
+  grid-row: 1;
+
+  background-position: 180px 180px;
+}
+
+#leftButton {
+  grid-column: 1;
+  grid-row: 2;
+
+  background-position: 0px 180px;
+}
+
+#downButton {
+  grid-column: 2;
+  grid-row: 2;
+  background-position: 120px 180px;
+}
+
+#rightButton {
+  grid-column: 3;
+  grid-row: 2;
+  background-position: -60px 180px;
+}
+
+.arrow-button {
+  width: 60px; /* Taille d'origine */
+  height: 60px;
+  background-image: url("images/tuilesIcones.png");
+  background-size: 300px 300px;
+
+  cursor: pointer;
+  animation: bubbleFloat 3s infinite ease-in-out;
+}
