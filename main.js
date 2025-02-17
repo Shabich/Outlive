@@ -21,7 +21,7 @@ let player = {
   health: 100,
   xp: 0,
   speed: 3,
-  image :"./images/Craby.png",
+  image: "./images/Craby.png",
   weapon: {
     damage: 1,
     fireRate: 1000, // Temps entre chaque tir en millisecondes
@@ -34,7 +34,7 @@ let niveau = 1;
 let loots = [];
 let projectiles = [];
 let keys = { up: false, down: false, left: false, right: false };
-let isPaused = false
+let isPaused = false;
 // Gestion des événements clavier et boutons (identique à avant)
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowUp") keys.up = true;
@@ -84,7 +84,11 @@ function drawPlayer() {
   const healthBarHeight = 5;
   const healthPercentage = player.health / 100;
   const healthColor =
-    healthPercentage > 0.6 ? "green" : healthPercentage > 0.3 ? "orange" : "red";
+    healthPercentage > 0.6
+      ? "green"
+      : healthPercentage > 0.3
+      ? "orange"
+      : "red";
 
   // Dessiner l'arrière-plan de la barre de vie
   ctx.fillStyle = "gray";
@@ -118,12 +122,16 @@ function drawPlayer() {
     ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
   } else {
     playerImage.onload = function () {
-      ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+      ctx.drawImage(
+        playerImage,
+        player.x,
+        player.y,
+        player.width,
+        player.height
+      );
     };
   }
 }
-
-
 
 function togglePause() {
   isPaused = !isPaused;
@@ -161,42 +169,42 @@ function shootProjectile(player, monsters) {
 
 function checkLootCollision() {
   loots.forEach((loot, index) => {
-      if (
-          player.x < loot.x + loot.width &&
-          player.x + player.width > loot.x &&
-          player.y < loot.y + loot.height &&
-          player.y + player.height > loot.y
-      ) {
-          // Appliquer le buff au joueur
-          applyLootEffect(loot.buff);
-          
-          // Supprimer le loot après l'avoir ramassé
-          loots.splice(index, 1);
-      }
+    if (
+      player.x < loot.x + loot.width &&
+      player.x + player.width > loot.x &&
+      player.y < loot.y + loot.height &&
+      player.y + player.height > loot.y
+    ) {
+      // Appliquer le buff au joueur
+      applyLootEffect(loot.buff);
+
+      // Supprimer le loot après l'avoir ramassé
+      loots.splice(index, 1);
+    }
   });
 }
 
 function applyLootEffect(buff) {
-  const type = Object.keys(buff)[0];  // Ex: "health", "damage", etc.
+  const type = Object.keys(buff)[0]; // Ex: "health", "damage", etc.
   const value = parseInt(buff[type]); // Convertir en nombre
 
   switch (type) {
-      case "health":
-          player.health = player.health + value; // Ne dépasse pas 100
-          showStatBanner(`+${value} Santé`);
-          break;
-      case "damage":
-          player.weapon.damage += value;
-          showStatBanner(`+${value} Dégâts`);
-          break;
-      case "speed":
-          player.speed += value;
-          showStatBanner(`+${value} Vitesse`);
-          break;
-      case "heal":
-          player.health = Math.min(player.health + value, 100);
-          showStatBanner(`+${value} Soin`);
-          break;
+    case "health":
+      player.health = player.health + value; // Ne dépasse pas 100
+      showStatBanner(`+${value} Santé`);
+      break;
+    case "damage":
+      player.weapon.damage += value;
+      showStatBanner(`+${value} Dégâts`);
+      break;
+    case "speed":
+      player.speed += value;
+      showStatBanner(`+${value} Vitesse`);
+      break;
+    case "heal":
+      player.health = Math.min(player.health + value, 100);
+      showStatBanner(`+${value} Soin`);
+      break;
   }
 }
 
@@ -208,7 +216,6 @@ let monsters = createMonsters(5, canvas);
 
 function gameLoop() {
   if (isPaused) return;
-
 
   clearCanvas();
   movePlayer();
@@ -239,7 +246,6 @@ function gameLoop() {
           ajouterExperience(monster.gainXp);
           if (Math.random() < 0.2) {
             loots.push(new Loot(monster.x, monster.y, ctx));
-
           }
         }
         projectiles.splice(index, 1); // Supprimer le projectile après collision
@@ -251,10 +257,10 @@ function gameLoop() {
     if (player.xp >= xpParNiveau) {
       player.xp -= xpParNiveau;
       niveau++;
-      if(niveau % 2 == 0){
+      if (niveau % 2 == 0) {
         createBoss(canvas, monsters);
       }
-      
+
       document.getElementById("niveau").textContent = niveau;
     }
     document.getElementById("experience").textContent = player.xp;
@@ -287,5 +293,9 @@ new Loot(100, 100);
 
 // Démarrer le jeu
 gameLoop();
-// Ajouter un monstre toutes les 5 secondes en passant canvas en paramètre
-setInterval(() => spawnMonster(monsters, canvas), 1000);
+
+setInterval(() => {
+  if (!isPaused) {
+    spawnMonster(monsters, canvas);
+  }
+}, 1000);
