@@ -19,7 +19,9 @@ export class Loot {
         case "damage":
           return "./images/buffs/attack.png";
         case "speed":
-          return "./images/buffs/coin.png";
+          return "./images/buffs/speed.png";
+        case "defense":
+          return "./images/buffs/defense.png"
         case "heal":
           return "./images/buffs/heal.png";
         default:
@@ -28,10 +30,11 @@ export class Loot {
     }
     randomBuff() {
       let loots = {
-        health: "5",
-        damage: "1",
-        speed: "1",
-        heal: "10",
+        health: 5,
+        damage: 0.2,
+        speed: 0.2,
+        heal: 10,
+        defense: 10,
       };
       let keys = Object.keys(loots);
       let randomKey = keys[Math.floor(Math.random() * keys.length)];

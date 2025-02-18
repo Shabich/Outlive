@@ -19,11 +19,13 @@ let player = {
   width: 80,
   height: 80,
   health: 100,
+  maxHealth: 100,
   xp: 0,
   speed: 3,
   image: "./images/Craby.png",
   weapon: {
     damage: 1,
+    attackspeed: 1,
     fireRate: 1000, // Temps entre chaque tir en millisecondes
     lastShot: 0, // Timestamp du dernier tir
   },
@@ -82,7 +84,7 @@ document.getElementById("rightButton").addEventListener("click", () => {
 function drawPlayer() {
   const healthBarWidth = player.width;
   const healthBarHeight = 5;
-  const healthPercentage = player.health / 100;
+  const healthPercentage = player.health / player.maxHealth;
   const healthColor =
     healthPercentage > 0.6
       ? "green"
@@ -109,9 +111,10 @@ function drawPlayer() {
   );
 
   // Mettre à jour les informations du joueur dans l'interface
-  document.getElementById("vie").textContent = Math.round(player.health);
+  document.getElementById("vie").textContent = Math.round(player.health) + " / " + player.maxHealth;
   document.getElementById("attaque").textContent = player.weapon.damage;
-  document.getElementById("vitesse").textContent = player.speed;
+  document.getElementById("vitesse").textContent = parseFloat((player.weapon.attackspeed).toFixed(1));
+
 
   document.getElementById("pauseButton").addEventListener("click", togglePause);
 
@@ -186,11 +189,11 @@ function checkLootCollision() {
 
 function applyLootEffect(buff) {
   const type = Object.keys(buff)[0]; // Ex: "health", "damage", etc.
-  const value = parseInt(buff[type]); // Convertir en nombre
-
+  const value = buff[type]; 
   switch (type) {
     case "health":
-      player.health = player.health + value; // Ne dépasse pas 100
+      player.maxHealth = player.maxHealth + value;
+      player.health = player.health + value;
       showStatBanner(`+${value} Santé`);
       break;
     case "damage":
@@ -198,8 +201,9 @@ function applyLootEffect(buff) {
       showStatBanner(`+${value} Dégâts`);
       break;
     case "speed":
-      player.speed += value;
-      showStatBanner(`+${value} Vitesse`);
+      player.weapon.attackspeed += value;
+      console.log(value)
+      showStatBanner(`+${value} Vitesse d'attaque`);
       break;
     case "heal":
       player.health = Math.min(player.health + value, 100);
@@ -226,10 +230,14 @@ function gameLoop() {
 
   // Tirer un projectile si le temps est écoulé
   const now = Date.now();
-  if (now - player.weapon.lastShot > player.weapon.fireRate) {
+  const attackSpeed = player.weapon.attackspeed; // Par défaut à 1 si non défini
+  const adjustedFireRate = player.weapon.fireRate / attackSpeed;
+  
+  if (now - player.weapon.lastShot > adjustedFireRate) {
     shootProjectile(player, monsters);
     player.weapon.lastShot = now;
   }
+  
 
   // Mettre à jour et dessiner les projectiles
   projectiles.forEach((projectile, index) => {
@@ -244,7 +252,7 @@ function gameLoop() {
           monsters.splice(monsterIndex, 1);
           player.xp = player.xp + monster.gainXp;
           ajouterExperience(monster.gainXp);
-          if (Math.random() < 0.2) {
+          if (Math.random() < 1 /*0.2  */) {
             loots.push(new Loot(monster.x, monster.y, ctx));
           }
         }
