@@ -179,7 +179,7 @@ function shootProjectile(player, monsters) {
   }
 }
 
-// Fonction pour afficher l'écran de défaite
+
 function showDefeatScreen(score) {
 
   const popupMessage = document.getElementById("popupMenuMessage");
@@ -198,11 +198,14 @@ function showDefeatScreen(score) {
     <button onclick="window.location.href='index.html'">⚓ Retourner au port</button>
   `;
 
-  document.getElementById("restartButton").addEventListener("click",  window.location.reload());
+  document.getElementById("restartButton").addEventListener("click", restartGame);
 
   document.getElementById("menuPopup").style.display = "flex";
 }
 
+function restartGame() {
+  window.location.reload();
+}
 
 
 function checkLootCollision() {
