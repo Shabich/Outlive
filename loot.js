@@ -33,7 +33,7 @@ export class Loot {
         health: 5,
         damage: 0.2,
         speed: 0.2,
-        heal: 10,
+        heal: 20,
         defense: 10,
       };
       let keys = Object.keys(loots);

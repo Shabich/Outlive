@@ -132,13 +132,18 @@ html {
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: 20px;
   gap: 10px;
   margin: 10px 0;
   justify-content: space-between;
 }
 
+
+
 .stats span {
+  font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
+  font-size: x-large  ;
   color: var(--highlight);
 }
 

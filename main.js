@@ -244,7 +244,7 @@ function applyLootEffect(buff) {
       showStatBanner(`+${value} Vitesse d'attaque`);
       break;
     case "heal":
-      player.health = Math.min(player.health + value, 100);
+      player.health = Math.min(player.health + value, player.maxHealth);
       showStatBanner(`+${value} Soin`);
       break;
   }
@@ -294,7 +294,7 @@ function gameLoop() {
           monsters.splice(monsterIndex, 1);
           player.xp = player.xp + monster.gainXp;
           ajouterExperience(monster.gainXp);
-          if (Math.random() < 1 /*0.2  */) {
+          if (Math.random() < 0.2 /*1  */) {
             loots.push(new Loot(monster.x, monster.y, ctx));
           }
         }
