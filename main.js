@@ -80,6 +80,11 @@ document.getElementById("rightButton").addEventListener("click", () => {
   keys.left = false;
 });
 
+const gamePopup = document.getElementById("menuPopup");
+const resumeButton = document.getElementById("resumeButton");
+resumeButton.addEventListener("click", togglePause);
+
+
 // Fonction pour dessiner le joueur
 function drawPlayer() {
   const healthBarWidth = player.width;
@@ -139,7 +144,10 @@ function drawPlayer() {
 function togglePause() {
   isPaused = !isPaused;
   if (!isPaused) {
+    gamePopup.style.display = "none"; 
     gameLoop(); // Relancer la boucle de jeu si on reprend
+  }else{
+    gamePopup.style.display = "flex"; 
   }
 }
 
