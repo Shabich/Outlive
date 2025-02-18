@@ -80,6 +80,7 @@ document.getElementById("rightButton").addEventListener("click", () => {
   keys.left = false;
 });
 
+
 const gamePopup = document.getElementById("menuPopup");
 const resumeButton = document.getElementById("resumeButton");
 resumeButton.addEventListener("click", togglePause);
@@ -178,6 +179,32 @@ function shootProjectile(player, monsters) {
   }
 }
 
+// Fonction pour afficher l'écran de défaite
+function showDefeatScreen(score) {
+
+  const popupMessage = document.getElementById("popupMenuMessage");
+  const popupMenu = document.querySelector(".popupMenu");
+  const popupButtons = document.querySelector(".popupMenu-buttons");
+
+  
+  popupMessage.innerHTML = "💀 Défaite ! 💀";
+
+  const scoreText = document.createElement("p");
+  scoreText.textContent = `Ton score est de ${score}`;
+  popupMenu.insertBefore(scoreText, popupButtons);
+
+  popupButtons.innerHTML = `
+    <button id="restartButton">🔄 Recommencer une partie</button>
+    <button onclick="window.location.href='index.html'">⚓ Retourner au port</button>
+  `;
+
+  document.getElementById("restartButton").addEventListener("click",  window.location.reload());
+
+  document.getElementById("menuPopup").style.display = "flex";
+}
+
+
+
 function checkLootCollision() {
   loots.forEach((loot, index) => {
     if (
@@ -246,6 +273,10 @@ function gameLoop() {
     player.weapon.lastShot = now;
   }
   
+  if(player.health <= 0){
+    showDefeatScreen(document.getElementById("experience").textContent);
+    return;
+  }
 
   // Mettre à jour et dessiner les projectiles
   projectiles.forEach((projectile, index) => {
