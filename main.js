@@ -263,7 +263,7 @@ function gameLoop() {
 
       document.getElementById("niveau").textContent = niveau;
     }
-    document.getElementById("experience").textContent = player.xp;
+    document.getElementById("experience").textContent = player.xp + ((niveau - 1 )* 100);
     mettreAJourXPBar();
   }
 

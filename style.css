@@ -79,7 +79,18 @@ html {
   background-color: var(--xp-bar-bg);
   transition: width 0.5s ease-in-out;
 }
-
+.xp-text{
+  position: absolute;
+  top: -150%;
+  right: 10px; /* Distance du bord droit */
+  transform: translateY(-50%);
+  color: #282621;
+  font-weight: bold;
+  font-size: 25px;
+}
+.stat-icon{
+  height: 80px;
+}
 .stat-banner {
   position: fixed;
   top: 20%;

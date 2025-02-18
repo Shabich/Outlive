@@ -52,15 +52,17 @@
           
           <div class="game">
             <div class="xp-bar-container">
-              <div class="xp-bar" id="xpBar"></div>
+                <div class="xp-bar" id="xpBar"></div>
+                <span class="xp-text">SCORE: <span id="experience" >0</span></span> <!-- Ajout de l'affichage XP -->
             </div>
             <canvas
-              id="gameCanvas"
-              class="game-container"
-              width="800"
-              height="600"
+                id="gameCanvas"
+                class="game-container"
+                width="800"
+                height="600"
             ></canvas>
-          </div>
+        </div>
+        
           
           <div class="stats">
             <p>
@@ -72,12 +74,12 @@
               Attaque: <span id="attaque">10</span>
             </p>
             <p>
-              <img src="images/buffs/health.png" class="stat-icon" />
+              <img src="images/buffs/speed.png" class="stat-icon" />
               Vitesse d'attaque: <span id="vitesse">8</span>
             </p>
             <p>
-              <img src="images/buffs/health.png" class="stat-icon" />
-              Vitesse d'attaque: <span id="experience">8</span>
+              <img src="images/buffs/defense.png" class="stat-icon" />
+              Defense: <span id="defense">8</span>
             </p>
             <p>
               <img src="images/buffs/coin.png" class="stat-icon" />
