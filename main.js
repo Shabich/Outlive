@@ -118,7 +118,7 @@ function drawPlayer() {
 
   // Mettre à jour les informations du joueur dans l'interface
   document.getElementById("vie").textContent = Math.round(player.health) + " / " + player.maxHealth;
-  document.getElementById("attaque").textContent = player.weapon.damage;
+  document.getElementById("attaque").textContent = parseFloat((player.weapon.damage).toFixed(1));
   document.getElementById("vitesse").textContent = parseFloat((player.weapon.attackspeed).toFixed(1));
 
 
