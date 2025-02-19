@@ -142,7 +142,7 @@ function checkProjectileCollision(projectile, monster) {
   
       if (checkCollision(player, monster)) {
         console.log("Collision avec un monstre!");
-        player.health = player.health - monster.degat
+        player.health = player.health - (monster.degat)/player.defense
         }
     });
   }

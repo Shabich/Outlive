@@ -19,6 +19,7 @@ let player = {
   width: 80,
   height: 80,
   health: 100,
+  defense: 1,
   maxHealth: 100,
   gold: 0,
   xp: 0,
@@ -124,7 +125,9 @@ function drawPlayer() {
   document.getElementById("vitesse").textContent = parseFloat(
     player.weapon.attackspeed.toFixed(1)
   );
-  document.getElementById("gold").textContent = parseFloat(player.gold)
+  document.getElementById("gold").textContent = parseFloat(player.gold);
+  document.getElementById("defense").textContent = parseFloat(player.defense);
+
   document.getElementById("pauseButton").addEventListener("click", togglePause);
 
   // Dessiner le joueur (image)
@@ -170,7 +173,6 @@ function movePlayer() {
     player.x += player.speed;
 }
 
-
 function shootProjectile(player, monsters) {
   const closestMonster = findClosestMonster(player, monsters);
   if (closestMonster) {
@@ -179,9 +181,9 @@ function shootProjectile(player, monsters) {
       player.y + player.height / 2,
       closestMonster
     );
-    
+
     projectiles.push(projectile);
-    
+
     // Supprimer le projectile après 3 secondes
     setTimeout(() => {
       const index = projectiles.indexOf(projectile);
@@ -191,7 +193,6 @@ function shootProjectile(player, monsters) {
     }, 1000);
   }
 }
-
 
 function showDefeatScreen(score) {
   const popupMessage = document.getElementById("popupMenuMessage");
@@ -259,9 +260,13 @@ function applyLootEffect(buff) {
       player.health = Math.min(player.health + value, player.maxHealth);
       showStatBanner(`+${value} Soin`);
       break;
+    case "defense":
+      player.defense += value;
+      showStatBanner(`+${value} Defense`);
+      break;
     case "gold":
       player.gold += value;
-      showStatBanner(`+${value} piece d'or`);
+      showStatBanner(`+${value} Piece d'or`);
       break;
   }
 }
@@ -330,7 +335,7 @@ function gameLoop() {
       document.getElementById("niveau").textContent = niveau;
     }
     document.getElementById("experience").textContent =
-      player.xp + (niveau) * 100;
+      player.xp + niveau * 100;
     mettreAJourXPBar();
   }
 
@@ -366,8 +371,7 @@ function spawnMonsters() {
     spawnMonster(monsters, canvas, player.x, player.y);
   }
 
-  let experience =
-    parseInt(document.getElementById("niveau").textContent);
+  let experience = parseInt(document.getElementById("niveau").textContent);
   console.log(experience);
   let ratio = 10000 / ((experience + 1) * 2.5);
   setTimeout(spawnMonsters, ratio); // Planifie le prochain spawn
@@ -375,4 +379,3 @@ function spawnMonsters() {
 
 // Démarrer le spawn initial
 spawnMonsters();
-

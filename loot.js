@@ -36,7 +36,7 @@ export class Loot {
         damage: 0.2,
         speed: 0.2,
         heal: 20,
-        defense: 10,
+        defense: 0.2,
         gold: 1, 
       };
       let keys = Object.keys(loots);
