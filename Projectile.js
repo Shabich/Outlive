@@ -14,6 +14,7 @@ export class Projectile {
       ctx.fillStyle = this.color;
       ctx.fill();
       ctx.closePath();
+      
     }
   
     update() {

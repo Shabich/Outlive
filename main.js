@@ -170,6 +170,7 @@ function movePlayer() {
     player.x += player.speed;
 }
 
+
 function shootProjectile(player, monsters) {
   const closestMonster = findClosestMonster(player, monsters);
   if (closestMonster) {
@@ -178,9 +179,19 @@ function shootProjectile(player, monsters) {
       player.y + player.height / 2,
       closestMonster
     );
+    
     projectiles.push(projectile);
+    
+    // Supprimer le projectile après 3 secondes
+    setTimeout(() => {
+      const index = projectiles.indexOf(projectile);
+      if (index !== -1) {
+        projectiles.splice(index, 1);
+      }
+    }, 1000);
   }
 }
+
 
 function showDefeatScreen(score) {
   const popupMessage = document.getElementById("popupMenuMessage");
@@ -359,7 +370,6 @@ function spawnMonsters() {
     parseInt(document.getElementById("niveau").textContent);
   console.log(experience);
   let ratio = 10000 / ((experience + 1) * 2.5);
-
   setTimeout(spawnMonsters, ratio); // Planifie le prochain spawn
 }
 
