@@ -24,6 +24,8 @@ export class Loot {
           return "./images/buffs/defense.png"
         case "heal":
           return "./images/buffs/heal.png";
+        case "gold":
+          return "./images/buffs/coin.png"
         default:
           return "./images/buffs/heal.png";
       }
@@ -35,6 +37,7 @@ export class Loot {
         speed: 0.2,
         heal: 20,
         defense: 10,
+        gold: 1, 
       };
       let keys = Object.keys(loots);
       let randomKey = keys[Math.floor(Math.random() * keys.length)];

@@ -94,7 +94,6 @@ class Monster {
   function createMonsters(count, canvas) { // Ajouter canvas en paramètre
     const monsters = [];
     const types = ["easy", "medium", "hard"];
-  
     for (let i = 0; i < count; i++) {
       const x = Math.random() * (canvas.width - 40); // Utiliser canvas.width
       const y = Math.random() * (canvas.height - 40); // Utiliser canvas.height
@@ -149,13 +148,22 @@ function checkProjectileCollision(projectile, monster) {
   }
   
   // Fonction pour ajouter des monstres de manière dynamique
-  function spawnMonster(monsters, canvas) { // Ajouter canvas en paramètre
-    const x = Math.random() * (canvas.width - 40);
-    const y = Math.random() * (canvas.height - 40);
+  function spawnMonster(monsters, canvas, playerX, playerY) {
+    console.log(playerX, playerY);
+    
     const types = ["easy", "medium", "hard"];
     const type = types[Math.floor(Math.random() * types.length)];
+    
+    let x, y;
+    let safeDistance = 400; // Distance minimale entre le joueur et le monstre
+    
+    do {
+        x = Math.random() * (canvas.width - 40);
+        y = Math.random() * (canvas.height - 40);
+    } while (Math.hypot(x - playerX, y - playerY) < safeDistance);
+    
     monsters.push(new Monster(x, y, type));
-  }
+}
 
 
   // monster.js

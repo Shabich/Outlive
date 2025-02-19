@@ -20,6 +20,7 @@ let player = {
   height: 80,
   health: 100,
   maxHealth: 100,
+  gold: 0,
   xp: 0,
   speed: 3,
   image: "./images/Craby.png",
@@ -32,7 +33,7 @@ let player = {
 };
 
 const xpParNiveau = 100;
-let niveau = 1;
+let niveau = 0;
 let loots = [];
 let projectiles = [];
 let keys = { up: false, down: false, left: false, right: false };
@@ -80,11 +81,9 @@ document.getElementById("rightButton").addEventListener("click", () => {
   keys.left = false;
 });
 
-
 const gamePopup = document.getElementById("menuPopup");
 const resumeButton = document.getElementById("resumeButton");
 resumeButton.addEventListener("click", togglePause);
-
 
 // Fonction pour dessiner le joueur
 function drawPlayer() {
@@ -117,11 +116,15 @@ function drawPlayer() {
   );
 
   // Mettre à jour les informations du joueur dans l'interface
-  document.getElementById("vie").textContent = Math.round(player.health) + " / " + player.maxHealth;
-  document.getElementById("attaque").textContent = parseFloat((player.weapon.damage).toFixed(1));
-  document.getElementById("vitesse").textContent = parseFloat((player.weapon.attackspeed).toFixed(1));
-
-
+  document.getElementById("vie").textContent =
+    Math.round(player.health) + " / " + player.maxHealth;
+  document.getElementById("attaque").textContent = parseFloat(
+    player.weapon.damage.toFixed(1)
+  );
+  document.getElementById("vitesse").textContent = parseFloat(
+    player.weapon.attackspeed.toFixed(1)
+  );
+  document.getElementById("gold").textContent = parseFloat(player.gold)
   document.getElementById("pauseButton").addEventListener("click", togglePause);
 
   // Dessiner le joueur (image)
@@ -145,10 +148,10 @@ function drawPlayer() {
 function togglePause() {
   isPaused = !isPaused;
   if (!isPaused) {
-    gamePopup.style.display = "none"; 
+    gamePopup.style.display = "none";
     gameLoop(); // Relancer la boucle de jeu si on reprend
-  }else{
-    gamePopup.style.display = "flex"; 
+  } else {
+    gamePopup.style.display = "flex";
   }
 }
 
@@ -179,14 +182,11 @@ function shootProjectile(player, monsters) {
   }
 }
 
-
 function showDefeatScreen(score) {
-
   const popupMessage = document.getElementById("popupMenuMessage");
   const popupMenu = document.querySelector(".popupMenu");
   const popupButtons = document.querySelector(".popupMenu-buttons");
 
-  
   popupMessage.innerHTML = "💀 Défaite ! 💀";
 
   const scoreText = document.createElement("p");
@@ -198,7 +198,9 @@ function showDefeatScreen(score) {
     <button onclick="window.location.href='index.html'">⚓ Retourner au port</button>
   `;
 
-  document.getElementById("restartButton").addEventListener("click", restartGame);
+  document
+    .getElementById("restartButton")
+    .addEventListener("click", restartGame);
 
   document.getElementById("menuPopup").style.display = "flex";
 }
@@ -206,7 +208,6 @@ function showDefeatScreen(score) {
 function restartGame() {
   window.location.reload();
 }
-
 
 function checkLootCollision() {
   loots.forEach((loot, index) => {
@@ -227,7 +228,7 @@ function checkLootCollision() {
 
 function applyLootEffect(buff) {
   const type = Object.keys(buff)[0]; // Ex: "health", "damage", etc.
-  const value = buff[type]; 
+  const value = buff[type];
   switch (type) {
     case "health":
       player.maxHealth = player.maxHealth + value;
@@ -240,12 +241,16 @@ function applyLootEffect(buff) {
       break;
     case "speed":
       player.weapon.attackspeed += value;
-      console.log(value)
+      console.log(value);
       showStatBanner(`+${value} Vitesse d'attaque`);
       break;
     case "heal":
       player.health = Math.min(player.health + value, player.maxHealth);
       showStatBanner(`+${value} Soin`);
+      break;
+    case "gold":
+      player.gold += value;
+      showStatBanner(`+${value} piece d'or`);
       break;
   }
 }
@@ -270,13 +275,13 @@ function gameLoop() {
   const now = Date.now();
   const attackSpeed = player.weapon.attackspeed; // Par défaut à 1 si non défini
   const adjustedFireRate = player.weapon.fireRate / attackSpeed;
-  
+
   if (now - player.weapon.lastShot > adjustedFireRate) {
     shootProjectile(player, monsters);
     player.weapon.lastShot = now;
   }
-  
-  if(player.health <= 0){
+
+  if (player.health <= 0) {
     showDefeatScreen(document.getElementById("experience").textContent);
     return;
   }
@@ -313,7 +318,8 @@ function gameLoop() {
 
       document.getElementById("niveau").textContent = niveau;
     }
-    document.getElementById("experience").textContent = player.xp + ((niveau - 1 )* 100);
+    document.getElementById("experience").textContent =
+      player.xp + (niveau) * 100;
     mettreAJourXPBar();
   }
 
@@ -344,8 +350,19 @@ new Loot(100, 100);
 // Démarrer le jeu
 gameLoop();
 
-setInterval(() => {
+function spawnMonsters() {
   if (!isPaused) {
-    spawnMonster(monsters, canvas);
+    spawnMonster(monsters, canvas, player.x, player.y);
   }
-}, 1000);
+
+  let experience =
+    parseInt(document.getElementById("experience").textContent) / 100;
+  console.log(experience);
+  let ratio = 10000 / ((experience + 1) * 3);
+
+  setTimeout(spawnMonsters, ratio); // Planifie le prochain spawn
+}
+
+// Démarrer le spawn initial
+spawnMonsters();
+
