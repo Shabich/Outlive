@@ -356,9 +356,9 @@ function spawnMonsters() {
   }
 
   let experience =
-    parseInt(document.getElementById("experience").textContent) / 100;
+    parseInt(document.getElementById("niveau").textContent);
   console.log(experience);
-  let ratio = 10000 / ((experience + 1) * 3);
+  let ratio = 10000 / ((experience + 1) * 2.5);
 
   setTimeout(spawnMonsters, ratio); // Planifie le prochain spawn
 }
