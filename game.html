@@ -1,127 +1,132 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Outlive</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      *{
-        font-family: "Pirata One", cursive;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="parent">
-      <div class="div1">
-        <div class="action-container">
-          <div
-            class="btn-action actionMenu"
-            onclick="window.location.href='index.html'"
-          ></div>
-          <div
-          class="btn-action actionPause"
-          id="pauseButton"
-        ></div>
-          
-    
-        </div>
-      </div>
-      <div class="div2">
-        <div class="game-wrapper">
-          <div class="leader">
-            <div class="title-image"></div>
 
-            <div class="leaderboard">
-              <h1>Leaderboard</h2>
-                <p>1. Alex Storm - 7200 pts</p>
-                <p>2. Lina Shadow - 6800 pts</p>
-                <p>3. Max Thunder - 6300 pts</p>
-                <p>4. Kira Blaze - 5900 pts</p>
-                <p>5. Leo Frost - 5500 pts</p>
-                <p>6. Nina Strike - 5100 pts</p>
-                <p>7. Zack Phantom - 4700 pts</p>
-                
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outlive</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      font-family: "Pirata One", cursive;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="parent">
+    <div class="div1">
+      <div class="action-container">
+        <div class="btn-action actionMenu" onclick="window.location.href='index.html'"></div>
+        <div class="btn-action actionPause" id="pauseButton"></div>
+
+
+      </div>
+    </div>
+    <div class="div2">
+      <div class="game-wrapper">
+        <div class="leader">
+          <div class="title-image"></div>
+
+          <div class="leaderboard">
+            <h1>Leaderboard</h2>
+              <p>1. Alex Storm - 7200 pts</p>
+              <p>2. Lina Shadow - 6800 pts</p>
+              <p>3. Max Thunder - 6300 pts</p>
+              <p>4. Kira Blaze - 5900 pts</p>
+              <p>5. Leo Frost - 5500 pts</p>
+              <p>6. Nina Strike - 5100 pts</p>
+              <p>7. Zack Phantom - 4700 pts</p>
+
           </div>
-          </div>
-          
-          
-          <div class="game">
-            <div class="xp-bar-container">
-                <div class="xp-bar" id="xpBar"></div>
-                <span class="xp-text">SCORE: <span id="experience" >0</span> Niveau : <span id="niveau">0</span></span> <!-- Ajout de l'affichage XP -->
-            </div>
-            <canvas
-                id="gameCanvas"
-                class="game-container"
-                width="800"
-                height="600"
-            ></canvas>
         </div>
-        
-          
-          <div class="stats">
-            <p>
-              <img src="images/buffs/health.png" alt="Santé" class="stat-icon" />
-              vie: <span id="vie">100</span>
-            </p>
-            <p>
-              <img src="images/buffs/attack.png" alt="Attaque" class="stat-icon" />
-              Attaque: <span id="attaque">0</span>
-            </p>
-            <p>
-              <img src="images/buffs/speed.png" class="stat-icon" />
-              Vitesse d'attaque: <span id="vitesse">0</span>
-            </p>
-            <p>
-              <img src="images/buffs/defense.png" class="stat-icon" />
-              Defense: <span id="defense">1</span>
-            </p>
-            <p>
-        
+
+
+        <div class="game">
+          <div class="xp-bar-container">
+            <div class="xp-bar" id="xpBar"></div>
+            <span class="xp-text">SCORE: <span id="experience">0</span> Niveau : <span id="niveau">0</span></span>
+            <!-- Ajout de l'affichage XP -->
+          </div>
+          <canvas id="gameCanvas" class="game-container" width="800" height="600"></canvas>
+        </div>
+
+
+        <div class="stats">
+          <p>
+            <img src="images/buffs/health.png" alt="Santé" class="stat-icon" />
+            vie: <span id="vie">100</span>
+          </p>
+          <p>
+            <img src="images/buffs/attack.png" alt="Attaque" class="stat-icon" />
+            Attaque: <span id="attaque">0</span>
+          </p>
+          <p>
+            <img src="images/buffs/speed.png" class="stat-icon" />
+            Vitesse d'attaque: <span id="vitesse">0</span>
+          </p>
+          <p>
+            <img src="images/buffs/defense.png" class="stat-icon" />
+            Defense: <span id="defense">1</span>
+          </p>
+          <p>
+
 
             <img src="images/buffs/coin.png" class="stat-icon" />
             Pièces d'or: <span id="gold">0</span>
           </p>
-          </div>
-      </div>
-      
-      </div>
-      <div class="div3">
-        <div class="controls">
-          <div class="arrow-button" id="upButton"></div>
-          <div class="arrow-button" id="leftButton"></div>
-          <div class="arrow-button" id="downButton"></div>
-          <div class="arrow-button" id="rightButton"></div>
+          <button id="shop">Boutique</button>
+
         </div>
       </div>
-    <div>
-  
 
-
-<!-- Fenêtre pop-up style pirate -->
-<div id="menuPopup" class="popupMenu-overlay">
-  <div class="popupMenu">
-    <h2 id="popupMenuMessage">🦜 Jeu en pause 🏴‍☠️</h2>
-    <p>Que veux-tu faire, capitaine ?</p>
-    <div class="popupMenu-buttons">
-      <button id="resumeButton">☠️ Reprendre l'aventure</button>
-      <button onclick="window.location.href='index.html'">⚓ Retourner au port</button>
     </div>
-  </div>
-</div>
+    <div class="div3">
+      <div class="controls">
+        <div class="arrow-button" id="upButton"></div>
+        <div class="arrow-button" id="leftButton"></div>
+        <div class="arrow-button" id="downButton"></div>
+        <div class="arrow-button" id="rightButton"></div>
+      </div>
+    </div>
+    <div>
 
-  
-    <div id="statBanner" class="stat-banner"></div>
-    v0.0.1
-    <a href="https://github.com/shabich" class="github-banner" target="_blank">
-      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" class="github-icon">
-      shabich
-    </a>
-    <script type="module" src="main.js"></script>
-  </body>
+
+
+
+      <div id="menuPopup" class="popupMenu-overlay">
+        <div class="popupMenu">
+          <h2 id="popupMenuMessage">🦜 Jeu en pause 🏴‍☠️</h2>
+          <p>Que veux-tu faire, capitaine ?</p>
+          <div class="popupMenu-buttons">
+            <button id="resumeButton">☠️ Reprendre l'aventure</button>
+            <button onclick="window.location.href='index.html'">⚓ Retourner au port</button>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="shopPopup">
+        <div class="title">
+          <h2>Bienvenue au bateau pirate !</h2>
+          <p>Echangez vos pièces contre l'un de nos objets!</p>
+          <div id="stand-shope"></div>
+          <div class="popupMenu-buttons">
+            <button id="cancelShop">Fermer et reprendre la partie</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="statBanner" class="stat-banner"></div>
+      v0.0.1
+      <a href="https://github.com/shabich" class="github-banner" target="_blank">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub"
+          class="github-icon">
+        shabich
+      </a>
+      <script type="module" src="main.js"></script>
+      <script type="module" src="shop.js"></script>
+</body>
+
 </html>

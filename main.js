@@ -10,6 +10,7 @@ import {
 } from "./monster.js";
 import { Projectile } from "./Projectile.js";
 import { Loot } from "./loot.js";
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -85,7 +86,6 @@ document.getElementById("rightButton").addEventListener("click", () => {
 const gamePopup = document.getElementById("menuPopup");
 const resumeButton = document.getElementById("resumeButton");
 resumeButton.addEventListener("click", togglePause);
-
 // Fonction pour dessiner le joueur
 function drawPlayer() {
   const healthBarWidth = player.width;
@@ -129,6 +129,7 @@ function drawPlayer() {
   document.getElementById("defense").textContent = parseFloat(player.defense);
 
   document.getElementById("pauseButton").addEventListener("click", togglePause);
+
 
   // Dessiner le joueur (image)
   const playerImage = new Image();
@@ -273,11 +274,13 @@ function applyLootEffect(buff) {
 
 // Créer des monstres en passant canvas en paramètre
 let monsters = createMonsters(5, canvas);
-
+export function pausedChange(){
+  isPaused = !isPaused;
+}
 // Boucle de jeu
 // main.js
 
-function gameLoop() {
+export function gameLoop() {
   if (isPaused) return;
 
   clearCanvas();
@@ -347,6 +350,8 @@ function gameLoop() {
   updateMonsters(monsters, player, ctx);
   requestAnimationFrame(gameLoop);
 }
+window.gameLoop = gameLoop;
+
 
 function showStatBanner(message) {
   const banner = document.getElementById("statBanner");
