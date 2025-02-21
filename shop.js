@@ -10,47 +10,47 @@ shopBtnOpen.addEventListener("click", openShop);
 const shop = document.getElementById("shopPopup");
 // toutes les statistiques sont en pourcentage
 const shopItems = [
-  {
-    name: "Épée de pirate",
-    price: 7,
-    img: "sword.png",
-    descripton: "Une bonne épée qui vous aidera a vous défaire de vos ennemis! Sans réel inconvénient..",
-    buff: {
-      attack: 15,
+    {
+      name: "Épée du Pirate",
+      price: 7,
+      img: "sword.png",
+      description: "Une lame aiguisée et légère, idéale pour les duels. Parfaite pour un vrai pirate !",
+      buff: {
+        attack: 15,
+      },
     },
-  },
-  {
-    name: "Casque de guerrier",
-    price: 15,
-    img: "hat.png",
-    descripton: "Armure tres lourde forgé par un forgeron légendaire, elle permet à son porteur de resister à tout.. ou presque..  ",
-    buff: {
-      defense: 30,
-      speed: -20,
+    {
+      name: "Casque du Guerrier",
+      price: 15,
+      img: "hat.png",
+      description: "Un casque forgé par un maître artisan. Protège efficacement mais alourdit légèrement son porteur.",
+      buff: {
+        defense: 30,
+        speed: -10,
+      },
     },
-  },
-  {
-    name: "Arc des elfes",
-    price: 20,
-    img: "map.png",
-    descripton: "Une bonne épée qui vous aidera a vous défaire de vos ennemis! Sans réel inconvénient..",
-    buff: {
-      attack: -50,
-      attackspeed: 50,
+    {
+      name: "Arc des Elfes",
+      price: 20,
+      img: "bow.png",
+      description: "Un arc d'une finesse remarquable, favorisant une cadence de tir rapide mais moins puissant en combat rapproché.",
+      buff: {
+        attack: -50,
+        attackspeed: 50,
+      },
     },
-  },
-  {
-    name: "Massue des orcs",
-    price: 15,
-    img: "compass.png",
-    descripton: "Une bonne épée qui vous aidera a vous défaire de vos ennemis! Sans réel inconvénient..",
-    buff: {
-      attack: 100,
-      attackspeed : -50,
+    {
+      name: "Massue des Orcs",
+      price: 15,
+      img: "mace.png",
+      description: "Une arme brutale conçue pour écraser les ennemis. Délivre des coups dévastateurs mais ralentit les attaques.",
+      buff: {
+        attack: 100,
+        attackspeed: -50,
+      },
     },
-  },
-];
-
+  ];
+  
 function openShop() {
   console.log("ouvrir le shop");
   pausedChange(); // Mettre à jour la variable globale
