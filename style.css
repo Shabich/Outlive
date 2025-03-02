@@ -32,6 +32,8 @@ html {
   justify-content: center;
   align-items: center;
   background-color: var(--primary-bg);
+  overflow: hidden;
+
 }
 
 .game-container {
@@ -193,6 +195,7 @@ html {
   grid-template-rows: repeat(10, 1fr);
   grid-template-rows: auto 1fr auto;
   width: 100vw;
+  height: 100vh;
   gap: 10px;
   padding: 10px;
 }
