@@ -1,7 +1,7 @@
 // window.isPaused = false;
 // window.gameLoop = gameLoop;
 
-import { gameLoop, pausedChange } from "./main.js";
+import { gameLoop, pausedChange, player } from "./main.js";
 // Récupérer les éléments du DOM
 const shopBtnCancel = document.getElementById("cancelShop");
 shopBtnCancel.addEventListener("click", closeShop);
@@ -16,7 +16,7 @@ const shopItems = [
       img: "sword.png",
       description: "Une lame aiguisée et légère, idéale pour les duels. Parfaite pour un vrai pirate !",
       buff: {
-        attack: 15,
+        attack: 1.5,
       },
     },
     {
@@ -25,8 +25,8 @@ const shopItems = [
       img: "hat.png",
       description: "Un casque forgé par un maître artisan. Protège efficacement mais alourdit légèrement son porteur.",
       buff: {
-        defense: 30,
-        speed: -10,
+        defense: 3,
+        speed: -1,
       },
     },
     {
@@ -35,8 +35,8 @@ const shopItems = [
       img: "bow.png",
       description: "Un arc d'une finesse remarquable, favorisant une cadence de tir rapide mais moins puissant en combat rapproché.",
       buff: {
-        attack: -50,
-        attackspeed: 50,
+        attack: -3,
+        attackspeed: 5,
       },
     },
     {
@@ -45,8 +45,8 @@ const shopItems = [
       img: "mace.png",
       description: "Une arme brutale conçue pour écraser les ennemis. Délivre des coups dévastateurs mais ralentit les attaques.",
       buff: {
-        attack: 100,
-        attackspeed: -50,
+        attack: 10,
+        attackspeed: -5,
       },
     },
   ];
@@ -98,5 +98,12 @@ function closeShop() {
 
 function buyItem(item) {
   console.log(`Achat de ${item.name} pour ${item.price} pièces`);
-  // Ajouter ici la logique d'achat, par exemple vérifier les pièces du joueur
+  console.log(item.buff)
+ Object.keys(item.buff).forEach((stat) => {
+      if (stat in player) {
+        player[stat] += item.buff[stat]; // Buff standard (ex: speed, defense)
+      } else if (stat in player.weapon) {
+        player.weapon[stat] += item.buff[stat]; // Buff d'arme (ex: attack, attackspeed)
+      }
+    });
 }

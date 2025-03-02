@@ -14,7 +14,7 @@ import { Loot } from "./loot.js";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let player = {
+ export let player = {
   x: 50,
   y: 50,
   width: 80,
