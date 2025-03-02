@@ -126,7 +126,7 @@ function drawPlayer() {
     player.weapon.attackspeed.toFixed(1)
   );
   document.getElementById("gold").textContent = parseFloat(player.gold);
-  document.getElementById("defense").textContent = parseFloat(player.defense);
+  document.getElementById("defense").textContent = parseFloat(player.defense.toFixed(1));
 
   document.getElementById("pauseButton").addEventListener("click", togglePause);
 
