@@ -61,6 +61,7 @@ class Monster {
     draw(ctx) {
       if (this.image.complete) { // Vérifie que l'image est bien chargée avant de la dessiner
           ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+
       }
 
       // Dessiner la barre de vie
@@ -139,6 +140,7 @@ function checkProjectileCollision(projectile, monster) {
     monsters.forEach((monster) => {
       monster.moveTowardsPlayer(player);
       monster.draw(ctx);
+
   
       if (checkCollision(player, monster)) {
         console.log("Collision avec un monstre!");

@@ -15,6 +15,9 @@
 </head>
 
 <body>
+  <div id="spinner">
+    <div class="loader"></div>
+  </div>
   <div class="parent">
     <div class="div1">
       <div class="action-container">
@@ -49,31 +52,35 @@
             <span class="xp-text">SCORE: <span id="experience">0</span> Niveau : <span id="niveau">0</span></span>
             <!-- Ajout de l'affichage XP -->
           </div>
-          <canvas id="gameCanvas" class="game-container" width="800" height="600"></canvas>
+          
+          <canvas id="gameCanvas" class="game-container" width="800" height="600">
+           
+
+          </canvas>
         </div>
 
 
         <div class="stats">
           <p>
-            <img src="images/buffs/health.png" alt="Santé" class="stat-icon" />
+            <img src="images/buffs/health.png" alt="Santé" class="stat-icon track-image" />
             vie: <span id="health">100</span>
           </p>
           <p>
-            <img src="images/buffs/attack.png" alt="Attaque" class="stat-icon" />
+            <img src="images/buffs/attack.png" alt="Attaque" class="stat-icon track-image" />
             Attaque: <span id="damage">0</span>
           </p>
           <p>
-            <img src="images/buffs/speed.png" class="stat-icon" />
+            <img src="images/buffs/speed.png" class="stat-icon track-image" />
             Vitesse d'attaque: <span id="speed">0</span>
           </p>
           <p>
-            <img src="images/buffs/defense.png" class="stat-icon" />
+            <img src="images/buffs/defense.png" class="stat-icon track-image" />
             Defense: <span id="defense">1</span>
           </p>
           <p>
 
 
-            <img src="images/buffs/coin.png" class="stat-icon" />
+            <img src="images/buffs/coin.png" class="stat-icon track-image" />
             Pièces d'or: <span id="gold">0</span>
           </p>
           <button id="shop">Boutique</button>
@@ -122,11 +129,59 @@
       v0.0.2
       <a href="https://github.com/shabich" class="github-banner" target="_blank">
         <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub"
-          class="github-icon">
+          class="github-icon track-image">
         shabich
       </a>
+
+  </div>
       <script type="module" src="main.js"></script>
       <script type="module" src="shop.js"></script>
 </body>
 
 </html>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll(".track-image"); // Sélectionne toutes les images de la page
+    const gameContainer = document.querySelector(".game-container"); // Élément avec background-image
+
+    const spinner = document.getElementById("spinner");
+    const content = document.getElementById("parent");
+    let loadedImages = 0;
+    let totalImages = images.length + (gameContainer ? 1 : 0); // +1 si game-container existe
+
+
+    if (gameContainer) {
+        console.log('test1')
+        const bgImage = new Image();
+        let bgStyle = getComputedStyle(gameContainer).backgroundImage;
+        let bgUrl = bgStyle.match(/url\(["']?(.*?)["']?\)/);
+        console.log('background en chargement,', bgUrl)
+        bgImage.src = bgUrl[1];     
+      do {
+       
+            bgImage.onload = bgImage.onerror = function () {
+                loadedImages++;
+                console.log(loadedImages)
+            };
+        }
+     while (!bgUrl); 
+       console.log('background chargé,', bgUrl)
+
+  }
+
+
+    do {
+
+      images.forEach((img) => {
+        img.onload = img.onerror = function () {
+            loadedImages++;
+        };
+    });
+    } while (!loadedImages === totalImages);
+    spinner.style.display = "none";
+    content.style.display = "block";
+});
+</script>

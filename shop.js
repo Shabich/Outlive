@@ -60,7 +60,6 @@ const shopItems = [
     shopItems.forEach((item) => {
       let itemDiv = document.createElement("div");
       itemDiv.classList.add("shop-item");
-  
       // Conteneur de l'image avec overlay
       let imgContainer = document.createElement("div");
       imgContainer.classList.add("img-container");
@@ -69,7 +68,8 @@ const shopItems = [
       img.src = item.img;
       img.alt = item.name;
       img.classList.add("item-img");
-  
+      img.classList.add("track-image")
+
       // Overlay toujours visible avec nom et prix
       let overlay = document.createElement("div");
       overlay.classList.add("overlay");
