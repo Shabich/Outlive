@@ -149,6 +149,19 @@ function drawPlayer() {
   }
 }
 
+
+document.addEventListener("visibilitychange", function () {
+  if (document.hidden) {
+      togglePause(); 
+  }
+});
+document.addEventListener("keydown", function (event) {
+  if (event.code === "Space") {
+      event.preventDefault(); 
+      togglePause(); 
+  }
+});
+
 function togglePause() {
   isPaused = !isPaused;
   if (!isPaused) {
