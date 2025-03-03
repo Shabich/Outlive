@@ -15,9 +15,13 @@
 </head>
 
 <body>
-  <div id="spinner">
+  <!-- <div id="spinner">
     <div class="loader"></div>
-  </div>
+  </div> -->
+
+
+  <div id="countdown"></div>
+
   <div class="parent">
     <div class="div1">
       <div class="action-container">
@@ -143,54 +147,20 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const spinner = document.getElementById("spinner");
+    const countdown = document.getElementById("countdown");
     const content = document.getElementById("parent");
 
+    console.log(countdown.style.display)
     setTimeout(() => {
-        spinner.style.display = "none";
+        countdown.style.display = "none";
         content.style.display = "block";
     }, 3000); // Masque le spinner après 3 secondes
+
+    console.log(countdown.style.display)
+
+
+
+
+    
 });
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     const images = document.querySelectorAll(".track-image"); // Sélectionne toutes les images de la page
-//     const gameContainer = document.querySelector(".game-container"); // Élément avec background-image
-
-//     const spinner = document.getElementById("spinner");
-//     const content = document.getElementById("parent");
-//     let loadedImages = 0;
-//     let totalImages = images.length + (gameContainer ? 1 : 0); // +1 si game-container existe
-
-
-//     if (gameContainer) {
-//         console.log('test1')
-//         const bgImage = new Image();
-//         let bgStyle = getComputedStyle(gameContainer).backgroundImage;
-//         let bgUrl = bgStyle.match(/url\(["']?(.*?)["']?\)/);
-//         console.log('background en chargement,', bgUrl)
-//         bgImage.src = bgUrl[1];     
-//       do {
-       
-//             bgImage.onload = bgImage.onerror = function () {
-//                 loadedImages++;
-//                 console.log(loadedImages)
-//             };
-//         }
-//      while (!bgUrl); 
-//        console.log('background chargé,', bgUrl)
-
-//   }
-
-
-//     do {
-
-//       images.forEach((img) => {
-//         img.onload = img.onerror = function () {
-//             loadedImages++;
-//         };
-//     });
-//     } while (!loadedImages === totalImages);
-//     spinner.style.display = "none";
-//     content.style.display = "block";
-// });
 </script>
