@@ -369,7 +369,11 @@ function showStatBanner(message) {
 new Loot(100, 100);
 
 // Démarrer le jeu
-gameLoop();
+// gameLoop();
+
+setTimeout(() => {
+  gameLoop();
+}, 3000); 
 
 function spawnMonsters() {
   if (!isPaused) {
